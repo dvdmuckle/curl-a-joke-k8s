@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata: 
+  name: curl-a-joke
+  labels: 
+    app: curl-a-joke
+spec: 
+  replicas: 4
+  selector: 
+    matchLabels: 
+      app: curl-a-joke
+  template: 
+    metadata: 
+      labels: 
+        app: curl-a-joke
+    spec: 
+      containers: 
+      - name: curl-a-joke
+        image: dvdmuckle/curl-a-joke
+        ports: 
+        -  containerPort: 8080
+           protocol: TCP
