@@ -1,0 +1,47 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata: 
+  name: curl-a-joke
+  labels: 
+    app: curl-a-joke
+spec: 
+  replicas: 4
+  selector: 
+    matchLabels: 
+      app: curl-a-joke
+  template: 
+    metadata: 
+      labels: 
+        app: curl-a-joke
+    spec: 
+      containers: 
+      - name: curl-a-joke
+        image: dvdmuckle/curl-a-joke:armhf
+        ports: 
+        -  containerPort: 8080
+           protocol: TCP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: curl-a-joke
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /curl-a-joke
+        backend:
+          serviceName: curl-a-joke
+          servicePort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata: 
+  name: curl-a-joke
+spec: 
+  selector: 
+    app: curl-a-joke
+  ports: 
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
