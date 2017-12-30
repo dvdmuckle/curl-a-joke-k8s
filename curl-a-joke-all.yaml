@@ -16,7 +16,7 @@ spec:
     spec: 
       containers: 
       - name: curl-a-joke
-        image: dvdmuckle/curl-a-joke:armhf
+        image: dvdmuckle/curl-a-joke
         ports: 
         -  containerPort: 8080
            protocol: TCP
