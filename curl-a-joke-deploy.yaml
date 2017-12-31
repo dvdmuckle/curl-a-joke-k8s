@@ -16,7 +16,7 @@ spec:
     spec: 
       containers: 
       - name: curl-a-joke
-        image: dvdmuckle/curl-a-joke
+        image: dvdmuckle/curl-a-joke:arm
         env:
           - name: PORT
             valueFrom:
