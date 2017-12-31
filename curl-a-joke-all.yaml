@@ -5,6 +5,7 @@ metadata:
 data:
   PORT: "8080"
 apiVersion: apps/v1beta1
+---
 kind: Deployment
 metadata: 
   name: curl-a-joke
@@ -32,6 +33,7 @@ spec:
         ports: 
         -  containerPort: 8080
            protocol: TCP
+---
 apiVersion: v1
 kind: Ingress
 metadata:
@@ -44,6 +46,7 @@ spec:
         backend:
           serviceName: curl-a-joke
           servicePort: 8080
+---
 kind: Service
 apiVersion: v1
 metadata: 
