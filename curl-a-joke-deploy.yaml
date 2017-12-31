@@ -17,6 +17,12 @@ spec:
       containers: 
       - name: curl-a-joke
         image: dvdmuckle/curl-a-joke:armhf
+        env:
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: curl-a-joke-config
+                key: PORT
         ports: 
         -  containerPort: 8080
            protocol: TCP
