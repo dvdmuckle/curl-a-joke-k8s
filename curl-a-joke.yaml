@@ -5,7 +5,7 @@ metadata:
 data:
   PORT: "8080"
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata: 
   name: curl-a-joke
