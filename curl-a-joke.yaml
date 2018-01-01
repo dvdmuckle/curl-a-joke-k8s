@@ -4,8 +4,8 @@ metadata:
   name: curl-a-joke-config
 data:
   PORT: "8080"
-apiVersion: apps/v1beta1
 ---
+apiVersion: apps/v1
 kind: Deployment
 metadata: 
   name: curl-a-joke
@@ -23,18 +23,26 @@ spec:
     spec: 
       containers: 
       - name: curl-a-joke
-        image: dvdmuckle/curl-a-joke:arm
+        image: dvdmuckle/curl-a-joke:armhf
+        args: ["-jokesdb", "/root/db/jokes.db"]
+        volumeMounts:
+                - mountPath: "/root/db"
+                  name: curl-a-joke-pv
+        ports: 
+        -  containerPort: 8080
+           protocol: TCP
         env:
           - name: PORT
             valueFrom:
               configMapKeyRef:
                 name: curl-a-joke-config
                 key: PORT
-        ports: 
-        -  containerPort: 8080
-           protocol: TCP
+      volumes:
+              - name: curl-a-joke-pv
+                persistentVolumeClaim:
+                        claimName: curl-a-joke-pvc
 ---
-apiVersion: v1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: curl-a-joke
@@ -46,6 +54,18 @@ spec:
         backend:
           serviceName: curl-a-joke
           servicePort: 8080
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+        name: curl-a-joke-pvc
+spec:
+        accessModes:
+                - ReadWriteMany
+        volumeMode: Filesystem
+        resources:
+                requests:
+                        storage: 500Mi
 ---
 kind: Service
 apiVersion: v1
