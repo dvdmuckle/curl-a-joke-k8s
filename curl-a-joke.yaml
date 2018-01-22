@@ -12,7 +12,6 @@ metadata:
   labels: 
     app: curl-a-joke
 spec: 
-  replicas: 4
   selector: 
     matchLabels: 
       app: curl-a-joke
@@ -37,6 +36,9 @@ spec:
               configMapKeyRef:
                 name: curl-a-joke-config
                 key: PORT
+        resources:
+          requests:
+            cpu: "200m"
       volumes:
               - name: curl-a-joke-pv
                 persistentVolumeClaim:
@@ -77,3 +79,16 @@ spec:
   - protocol: TCP
     port: 8080
     targetPort: 8080
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: curl-a-joke
+spec: 
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    name: curl-a-joke
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
