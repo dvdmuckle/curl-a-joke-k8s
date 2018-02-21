@@ -22,7 +22,7 @@ spec:
     spec: 
       containers: 
       - name: curl-a-joke
-        image: dvdmuckle/curl-a-joke:armhf
+        image: dvdmuckle/curl-a-joke
         args: ["-jokesdb", "/root/db/jokes.db"]
         volumeMounts:
                 - mountPath: "/root/db"
