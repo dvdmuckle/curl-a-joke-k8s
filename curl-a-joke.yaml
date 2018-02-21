@@ -28,8 +28,8 @@ spec:
                 - mountPath: "/root/db"
                   name: curl-a-joke-pv
         ports: 
-        -  containerPort: 8080
-           protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
         env:
           - name: PORT
             valueFrom:
@@ -38,11 +38,11 @@ spec:
                 key: PORT
         resources:
           requests:
-            cpu: "200m"
+            cpu: 200m
       volumes:
-              - name: curl-a-joke-pv
-                persistentVolumeClaim:
-                        claimName: curl-a-joke-pvc
+          - name: curl-a-joke-pv
+            persistentVolumeClaim:
+              claimName: curl-a-joke-pvc
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
